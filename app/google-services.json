@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "700417461917",
+    "project_id": "myvchat-63c87",
+    "storage_bucket": "myvchat-63c87.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:700417461917:android:af8e15c0ca2c290bf60e74",
+        "android_client_info": {
+          "package_name": "com.martynov.myvchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "700417461917-qbn49cv9k3d2lds890js3752erahlv89.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.martynov.myvchat",
+            "certificate_hash": "973de0d8ea315f5cb1d1739dc7919ea77edc5c81"
+          }
+        },
+        {
+          "client_id": "700417461917-pheklsqmqfjjjjht39fii91433rjr50l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIauINGe0reonc7UtN20dKGUKZj2MES7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "700417461917-pheklsqmqfjjjjht39fii91433rjr50l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
