@@ -8,6 +8,7 @@ import com.martynov.myvchat.MainActivity
 import com.martynov.myvchat.R
 import com.martynov.myvchat.activities.RegisterActivity
 import com.martynov.myvchat.databinding.FragmentSettingsBinding
+import com.martynov.myvchat.utilits.AUTH
 import com.martynov.myvchat.utilits.replaceActivity
 
 
@@ -30,7 +31,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.settings_menu_exit ->{
-                //AUTH.signOut()
+                AUTH.signOut()
                 (activity as MainActivity).replaceActivity(RegisterActivity())
             }
         }
