@@ -1,6 +1,7 @@
 package com.martynov.myvchat.ui.fragments
 
 
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -21,7 +22,6 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     override fun onResume() {
         super.onResume()
         setHasOptionsMenu(true)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
