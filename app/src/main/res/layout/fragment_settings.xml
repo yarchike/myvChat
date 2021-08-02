@@ -31,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:text="@string/settings_default_username"
+            tools:text="@string/settings_default_username"
             android:textSize="@dimen/normalText"
             app:layout_constraintTop_toTopOf="@id/settings_user_photo"
             app:layout_constraintStart_toEndOf="@id/settings_user_photo"
@@ -40,6 +40,7 @@
             android:layout_marginStart="@dimen/horizontal_margin"/>
 
         <TextView
+            android:id="@+id/settings_status"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/dark_white"
@@ -75,7 +76,7 @@
             android:id="@+id/settings_phone_number"
             app:layout_constraintTop_toTopOf="@id/settings_btn_change_number_phone"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/settings_default_number"
+            tools:text="@string/settings_default_number"
             style="@style/normalText" />
 
         <TextView
@@ -104,7 +105,7 @@
             android:id="@+id/settings_username"
             app:layout_constraintTop_toTopOf="@id/settings_btn_change_username"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/settings_default_login"
+            tools:text="@string/settings_default_login"
             style="@style/normalText" />
 
         <TextView

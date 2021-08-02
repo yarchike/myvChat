@@ -3,14 +3,15 @@ package com.martynov.myvchat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.martynov.myvchat.activities.RegisterActivity
 import com.martynov.myvchat.databinding.ActivityMainBinding
+import com.martynov.myvchat.model.User
 import com.martynov.myvchat.ui.fragments.ChatsFragment
 import com.martynov.myvchat.ui.objects.AppDrawer
-import com.martynov.myvchat.utilits.AUTH
-import com.martynov.myvchat.utilits.initFirebase
-import com.martynov.myvchat.utilits.replaceActivity
-import com.martynov.myvchat.utilits.replaceFragment
+import com.martynov.myvchat.utilits.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,5 +47,13 @@ class MainActivity : AppCompatActivity() {
         mToolbar = mBinding.mainToolbar
         mAppDrawer = AppDrawer(this, mToolbar)
         initFirebase()
+        initUser()
+    }
+
+    private fun initUser() {
+        REF_DATABASE_ROOT.child(NODE_USERS).child(UID).addListenerForSingleValueEvent(AppValueEventListener{
+            USER = it.getValue(User::class.java) ?: User()
+
+        })
     }
 }
