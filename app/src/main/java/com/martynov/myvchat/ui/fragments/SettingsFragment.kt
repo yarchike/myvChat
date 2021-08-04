@@ -3,16 +3,13 @@ package com.martynov.myvchat.ui.fragments
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.net.Uri
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import com.google.firebase.storage.StorageReference
 import com.martynov.myvchat.R
 import com.martynov.myvchat.activities.RegisterActivity
 import com.martynov.myvchat.databinding.FragmentSettingsBinding
 import com.martynov.myvchat.utilits.*
-import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.fragment_settings.*
@@ -44,7 +41,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         settings_change_photo.setOnClickListener {
             changePhotoUser()
         }
-        settings_user_photo.donwloadAndSetImage(USER.photoUrl)
+        settings_user_photo.downloadAndSetImage(USER.photoUrl)
     }
 
     private fun changePhotoUser() {
@@ -81,9 +78,10 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             putImageToStorage(uri, path) {
                 getUrlFromeStorage(path) {
                     putUrlTodatabase(it) {
-                        settings_user_photo.donwloadAndSetImage(it)
+                        settings_user_photo.downloadAndSetImage(it)
                         showToast(getString(R.string.toast_data_update))
                         USER.photoUrl = it
+                        APP_ACTIVITY.mAppDrawer.updateHeader()
                     }
                 }
             }
