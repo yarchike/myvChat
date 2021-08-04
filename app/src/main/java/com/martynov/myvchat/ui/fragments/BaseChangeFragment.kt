@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.martynov.myvchat.MainActivity
 import com.martynov.myvchat.R
+import com.martynov.myvchat.utilits.APP_ACTIVITY
 
 open class BaseChangeFragment(layout: Int) : Fragment(layout) {
 
@@ -17,6 +18,7 @@ open class BaseChangeFragment(layout: Int) : Fragment(layout) {
 
     override fun onStop() {
         super.onStop()
+        APP_ACTIVITY.hideKeyboard()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

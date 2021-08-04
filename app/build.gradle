@@ -60,6 +60,11 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:28.3.0')
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-database-ktx'
+    implementation 'com.google.firebase:firebase-storage-ktx'
+
+    //Cropper
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+
 
 
 }
