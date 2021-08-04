@@ -3,13 +3,16 @@ package com.martynov.myvchat.ui.fragments
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.net.Uri
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import com.google.firebase.storage.StorageReference
 import com.martynov.myvchat.R
 import com.martynov.myvchat.activities.RegisterActivity
 import com.martynov.myvchat.databinding.FragmentSettingsBinding
 import com.martynov.myvchat.utilits.*
+import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.fragment_settings.*
@@ -18,7 +21,6 @@ import kotlinx.android.synthetic.main.fragment_settings.*
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     private lateinit var mBinding: FragmentSettingsBinding
-
 
 
     override fun onResume() {
@@ -42,14 +44,15 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         settings_change_photo.setOnClickListener {
             changePhotoUser()
         }
+        settings_user_photo.donwloadAndSetImage(USER.photoUrl)
     }
 
     private fun changePhotoUser() {
         CropImage.activity()
-            .setAspectRatio(1,1)
-            .setRequestedSize(600,600)
+            .setAspectRatio(1, 1)
+            .setRequestedSize(600, 600)
             .setCropShape(CropImageView.CropShape.OVAL)
-            .start(APP_ACTIVITY)
+            .start(APP_ACTIVITY, this)
     }
 
 
@@ -59,8 +62,8 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.settings_menu_exit ->{
+        when (item.itemId) {
+            R.id.settings_menu_exit -> {
                 AUTH.signOut()
                 APP_ACTIVITY.replaceActivity(RegisterActivity())
             }
@@ -69,4 +72,23 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         }
         return true
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            val uri = CropImage.getActivityResult(data).uri
+            val path = REF_STORAGE_ROOT.child(FOLDER_PROFILE_IMAGE).child(CURRENT_UID)
+            putImageToStorage(uri, path) {
+                getUrlFromeStorage(path) {
+                    putUrlTodatabase(it) {
+                        settings_user_photo.donwloadAndSetImage(it)
+                        showToast(getString(R.string.toast_data_update))
+                        USER.photoUrl = it
+                    }
+                }
+            }
+        }
+    }
 }
+
+

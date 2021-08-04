@@ -7,19 +7,17 @@ import androidx.fragment.app.Fragment
 import com.martynov.myvchat.MainActivity
 import com.martynov.myvchat.R
 import com.martynov.myvchat.utilits.APP_ACTIVITY
+import com.martynov.myvchat.utilits.hideKeyboard
 
 open class BaseChangeFragment(layout: Int) : Fragment(layout) {
 
     override fun onStart() {
         super.onStart()
         setHasOptionsMenu(true)
-        (activity as MainActivity).mAppDrawer.disableDrawer()
+        APP_ACTIVITY.mAppDrawer.disableDrawer()
+        hideKeyboard()
     }
 
-    override fun onStop() {
-        super.onStop()
-        APP_ACTIVITY.hideKeyboard()
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         (activity as MainActivity).menuInflater.inflate(R.menu.settings_menu_confirm, menu)
