@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -15,6 +16,10 @@ import com.martynov.myvchat.ui.fragments.ChatsFragment
 import com.martynov.myvchat.ui.objects.AppDrawer
 import com.martynov.myvchat.utilits.*
 import com.theartofdev.edmodo.cropper.CropImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +34,9 @@ class MainActivity : AppCompatActivity() {
         APP_ACTIVITY = this
         initFirebase()
         initUser{
-            initContacts()
+            CoroutineScope(Dispatchers.IO).launch {
+                initContacts()
+            }
             initFields()
             initFunc()
         }
@@ -37,7 +44,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun initContacts() {
         if(checkPermission(READ_CONTACTS)){
-            showToast("Чтение контактов")
+            val array = arrayOfNulls<Int>(900000)
+            array.forEach {
+                println(it)
+            }
         }
     }
 
