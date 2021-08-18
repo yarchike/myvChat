@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/layout/fragment_change_bio.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_change_name.xml" value="0.1828125" />
         <entry key="app/src/main/res/layout/fragment_change_username.xml" value="0.26197916666666665" />
+        <entry key="app/src/main/res/layout/fragment_chats.xml" value="0.2759259259259259" />
         <entry key="app/src/main/res/layout/fragment_contacts.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.26197916666666665" />
         <entry key="app/src/main/res/menu/settings_action_menu.xml" value="0.1828125" />
