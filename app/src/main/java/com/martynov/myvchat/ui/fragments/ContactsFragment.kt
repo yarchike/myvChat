@@ -10,6 +10,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseReference
 import com.martynov.myvchat.R
 import com.martynov.myvchat.model.CommoModel
+import com.martynov.myvchat.ui.fragments.single_chat.SingleChatFragment
 import com.martynov.myvchat.utilits.*
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.contact_item.view.*
