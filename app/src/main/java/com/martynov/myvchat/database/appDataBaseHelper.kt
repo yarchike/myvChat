@@ -9,6 +9,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ServerValue
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.martynov.myvchat.R
 import com.martynov.myvchat.model.CommoModel
 import com.martynov.myvchat.model.UserModel
 
@@ -37,7 +38,7 @@ const val CHILD_BIO = "bio"
 const val CHILD_PHOTO_URL = "photoUrl"
 const val CHILD_STATE = "state"
 const val CHILD_TEXT = "text"
-const val CHILD_TYPE ="type"
+const val CHILD_TYPE = "type"
 const val CHILD_FROM = "from"
 const val CHILD_TIMESTAMP = "timeStamp"
 
@@ -49,6 +50,7 @@ fun initFirebase() {
     CURRENT_UID = AUTH.currentUser?.uid.toString()
     REF_STORAGE_ROOT = FirebaseStorage.getInstance().reference
 }
+
 inline fun putUrlTodatabase(url: String, crossinline function: () -> Unit) {
     REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(
         CHILD_PHOTO_URL
@@ -60,6 +62,7 @@ inline fun putUrlTodatabase(url: String, crossinline function: () -> Unit) {
             showToast(it.message.toString())
         }
 }
+
 inline fun getUrlFromeStorage(path: StorageReference, crossinline function: (url: String) -> Unit) {
     path.downloadUrl
         .addOnSuccessListener {
@@ -80,20 +83,22 @@ inline fun putImageToStorage(uri: Uri, path: StorageReference, crossinline funct
             showToast(it.message.toString())
         }
 }
-inline fun initUser(crossinline function: () -> Unit) {
-    REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).addListenerForSingleValueEvent(AppValueEventListener{
-        USER = it.getValue(UserModel::class.java) ?: UserModel()
-        if(USER.username.isEmpty()){
-            USER.username = CURRENT_UID
-        }
-        function()
 
-    })
+inline fun initUser(crossinline function: () -> Unit) {
+    REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
+        .addListenerForSingleValueEvent(AppValueEventListener {
+            USER = it.getValue(UserModel::class.java) ?: UserModel()
+            if (USER.username.isEmpty()) {
+                USER.username = CURRENT_UID
+            }
+            function()
+
+        })
 }
 
 
 fun updatePhonesToDataBase(arrayContacts: ArrayList<CommoModel>) {
-    if(AUTH.currentUser!=null) {
+    if (AUTH.currentUser != null) {
         REF_DATABASE_ROOT.child(NODE_PHONES).addListenerForSingleValueEvent(AppValueEventListener {
             it.children.forEach { snapshot ->
                 arrayContacts.forEach { contact ->
@@ -113,10 +118,11 @@ fun updatePhonesToDataBase(arrayContacts: ArrayList<CommoModel>) {
         })
     }
 }
-fun DataSnapshot.getCommonModel(): CommoModel  =
+
+fun DataSnapshot.getCommonModel(): CommoModel =
     this.getValue(CommoModel::class.java) ?: CommoModel()
 
-fun DataSnapshot.getUsernModel(): UserModel  =
+fun DataSnapshot.getUsernModel(): UserModel =
     this.getValue(UserModel::class.java) ?: UserModel()
 
 fun sendMessage(message: String, receivingUserId: String, typeText: String, function: () -> Unit) {
@@ -138,5 +144,45 @@ fun sendMessage(message: String, receivingUserId: String, typeText: String, func
         .addOnSuccessListener { function() }
         .addOnFailureListener { showToast(it.message.toString()) }
 
+
+}
+
+fun updateCurrentUsername(newUserName:String) {
+    REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_USERNAME)
+        .setValue(newUserName)
+        .addOnCompleteListener {
+            if (it.isSuccessful) {
+                showToast(APP_ACTIVITY.getString(R.string.toast_data_update))
+                deleteOldUsername(newUserName)
+            } else {
+                showToast(it.exception?.message.toString())
+            }
+        }
+}
+
+private fun deleteOldUsername(newUserName:String) {
+    REF_DATABASE_ROOT.child(NODE_USERNAMES).child(USER.username).removeValue()
+        .addOnSuccessListener {
+                showToast(APP_ACTIVITY.getString(R.string.toast_data_update))
+                APP_ACTIVITY.supportFragmentManager.popBackStack()
+                USER.username = newUserName
+            }.addOnFailureListener { showToast(it.message.toString()) }
+
+}
+fun setBioToDatabase(newBio: String) {
+    REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_BIO).setValue(newBio).addOnSuccessListener {
+            showToast(APP_ACTIVITY.getString(R.string.toast_data_update))
+            USER.bio = newBio
+            APP_ACTIVITY.supportFragmentManager.popBackStack()
+    }.addOnFailureListener { showToast(it.message.toString()) }
+}
+fun setNameToDatabase(fullname: String) {
+    REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_FULLNAME).setValue(fullname)
+        .addOnSuccessListener {
+                showToast(APP_ACTIVITY.getString(R.string.toast_data_update))
+                USER.fullname = fullname
+                APP_ACTIVITY.mAppDrawer.updateHeader()
+                APP_ACTIVITY.supportFragmentManager.popBackStack()
+        }.addOnFailureListener { showToast(it.message.toString()) }
 
 }

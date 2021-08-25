@@ -1,4 +1,4 @@
-package com.martynov.myvchat.ui.fragments
+package com.martynov.myvchat.ui.fragments.register
 
 import androidx.fragment.app.Fragment
 import com.google.firebase.FirebaseException
@@ -6,11 +6,7 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.martynov.myvchat.MainActivity
 import com.martynov.myvchat.R
-import com.martynov.myvchat.activities.RegisterActivity
-import com.martynov.myvchat.utilits.AUTH
-import com.martynov.myvchat.utilits.replaceActivity
-import com.martynov.myvchat.utilits.replaceFragment
-import com.martynov.myvchat.utilits.showToast
+import com.martynov.myvchat.utilits.*
 import kotlinx.android.synthetic.main.fragment_enter_phone_number.*
 import java.util.concurrent.TimeUnit
 
@@ -27,7 +23,7 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
                 AUTH.signInWithCredential(credential).addOnCompleteListener {
                     if (it.isSuccessful) {
                         showToast("Доброе пожаловать")
-                        (activity as RegisterActivity).replaceActivity(MainActivity())
+                       restartActivity()
                     } else {
                         showToast(it.exception?.message.toString())
                     }
@@ -62,7 +58,7 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
             mPhoneNumber,
             60,
             TimeUnit.SECONDS,
-            activity as RegisterActivity,
+            APP_ACTIVITY,
             mCallback
         )
     }

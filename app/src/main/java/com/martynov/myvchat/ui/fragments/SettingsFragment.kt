@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import com.martynov.myvchat.R
-import com.martynov.myvchat.activities.RegisterActivity
 import com.martynov.myvchat.databinding.FragmentSettingsBinding
 import com.martynov.myvchat.utilits.*
 import com.theartofdev.edmodo.cropper.CropImage
@@ -63,7 +62,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             R.id.settings_menu_exit -> {
                 AppStates.updateState(AppStates.OFFLINE)
                 AUTH.signOut()
-                APP_ACTIVITY.replaceActivity(RegisterActivity())
+                restartActivity()
             }
             R.id.settings_menu_change_name ->
                 replaceFragment(ChangeNameFragment())

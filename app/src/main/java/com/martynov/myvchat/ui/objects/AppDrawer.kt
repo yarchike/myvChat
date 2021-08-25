@@ -136,10 +136,10 @@ class AppDrawer {
     private  fun clickToItem(position: Int){
         when(position){
             7 -> {
-                APP_ACTIVITY.replaceFragment(SettingsFragment())
+                replaceFragment(SettingsFragment())
             }
             4->{
-                APP_ACTIVITY.replaceFragment(ContactsFragment())
+                replaceFragment(ContactsFragment())
             }
         }
     }

@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import com.martynov.myvchat.activities.RegisterActivity
 import com.martynov.myvchat.databinding.ActivityMainBinding
-import com.martynov.myvchat.ui.fragments.ChatsFragment
+import com.martynov.myvchat.ui.fragments.MainFragment
+import com.martynov.myvchat.ui.fragments.register.EnterPhoneNumberFragment
 import com.martynov.myvchat.ui.objects.AppDrawer
 import com.martynov.myvchat.utilits.*
 import kotlinx.coroutines.CoroutineScope
@@ -38,12 +38,12 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initFunc() {
+        setSupportActionBar(mToolbar)
         if (AUTH.currentUser != null) {
-            setSupportActionBar(mToolbar)
             mAppDrawer.create()
-            replaceFragment(ChatsFragment(), false)
+            replaceFragment(MainFragment(), false)
         } else {
-            replaceActivity(RegisterActivity())
+            replaceFragment(EnterPhoneNumberFragment(), false)
         }
 
     }

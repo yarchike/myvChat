@@ -6,14 +6,12 @@ import com.martynov.myvchat.databinding.FragmentChatsBinding
 import com.martynov.myvchat.utilits.APP_ACTIVITY
 
 
-class ChatsFragment : Fragment(R.layout.fragment_chats) {
-
-    private lateinit var mBinding: FragmentChatsBinding
-
+class MainFragment : Fragment(R.layout.fragment_chats) {
 
     override fun onResume() {
         super.onResume()
-        APP_ACTIVITY.title = "Чаты"
+        APP_ACTIVITY.title = "MYVChat"
+        APP_ACTIVITY.mAppDrawer.enableDrawer()
 
     }
 }
